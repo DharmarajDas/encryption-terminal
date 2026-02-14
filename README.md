@@ -135,16 +135,16 @@ http://localhost:8080/swagger-ui.html
 ## 📸 Screenshots
 
 ### Home Page
-![Home](screenshots/home.png)
+![Home](screenshots/home.png.png)
 
 ### Encryption Result
-![Encrypt](screenshots/encrypt.png)
+![Encrypt](screenshots/encrypt.png.png)
 
 ### Decryption Result
-![Decrypt](screenshots/decrypt.png)
+![Decrypt](screenshots/decrypt.png.png)
 
 ### Swagger UI
-![Swagger](screenshots/swagger.png)
+![Swagger](screenshots/swagger.png.png)
 
 
 ---
