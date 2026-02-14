@@ -131,29 +131,21 @@ http://localhost:8080/swagger-ui.html
 
 ---
 
-## 📸 Screenshots to Add in README
 
-Create folder:
+## 📸 Screenshots
 
-```
-/screenshots
-```
-
-Add images:
-
-* Home page UI
-* Encryption result
-* Decryption result
-* Swagger API page
-
-Then show in README:
-
-```
+### Home Page
 ![Home](screenshots/home.png)
+
+### Encryption Result
 ![Encrypt](screenshots/encrypt.png)
+
+### Decryption Result
 ![Decrypt](screenshots/decrypt.png)
+
+### Swagger UI
 ![Swagger](screenshots/swagger.png)
-```
+
 
 ---
 
