@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Encryption Terminal</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #020b05, #001a0d);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #00ff88;
+    }
+
+    .card {
+      background: #111;
+      padding: 40px;
+      border-radius: 15px;
+      width: 520px;
+      box-shadow: 0 0 25px rgba(0, 255, 136, 0.3);
+      text-align: center;
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      margin-bottom: 25px;
+      letter-spacing: 3px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 120px;
+      border-radius: 10px;
+      border: 1px solid #333;
+      padding: 12px;
+      background: #1a1a1a;
+      color: #fff;
+      resize: none;
+      font-size: 15px;
+      margin-bottom: 15px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      flex: 1;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 15px;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    .encrypt { background: #00ff88; color: black; }
+    .decrypt { background: transparent; border: 2px solid #00ff88; color: #00ff88; }
+    .clear   { background: #ff4444; color: white; }
+
+    .message {
+      margin-top: 10px;
+      font-size: 14px;
+      min-height: 20px;
+    }
+
+    .error { color: #ff5555; }
+    .loading { color: #ffaa00; }
+    .result { color: white; margin-top: 10px; }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+    <h1>ENCRYPTION TERMINAL</h1>
+
+    <textarea id="message" placeholder="Type your message here..."></textarea>
+
+    <div class="buttons">
+      <button class="encrypt" onclick="encrypt()">Encrypt</button>
+      <button class="decrypt" onclick="decrypt()">Decrypt</button>
+      <button class="clear" onclick="clearText()">Clear</button>
+    </div>
+
+    <div id="status" class="message"></div>
+    <div id="result" class="result"></div>
+  </div>
+
+  <script>
+    const BASE_URL = "/api";
+
+    function showError(msg) {
+      const status = document.getElementById("status");
+      status.className = "message error";
+      status.innerText = msg;
+    }
+
+    function showLoading() {
+      const status = document.getElementById("status");
+      status.className = "message loading";
+      status.innerText = "Processing...";
+    }
+
+    function showResult(text) {
+      document.getElementById("status").innerText = "";
+      document.getElementById("result").innerText = text;
+    }
+
+    function clearText() {
+      document.getElementById("message").value = "";
+      document.getElementById("result").innerText = "";
+      document.getElementById("status").innerText = "";
+    }
+
+    async function encrypt() {
+      const message = document.getElementById("message").value.trim();
+
+      if (!message) {
+        showError("Please enter a message first.");
+        return;
+      }
+
+      showLoading();
+
+      try {
+        const response = await fetch(`${BASE_URL}/encrypt?message=${encodeURIComponent(message)}`);
+        const data = await response.json();
+        showResult("Encrypted Text: " + data.transformedText);
+      } catch {
+        showError("Server error. Please try again.");
+      }
+    }
+
+    async function decrypt() {
+      const message = document.getElementById("message").value.trim();
+
+      if (!message) {
+        showError("Please enter a message first.");
+        return;
+      }
+
+      showLoading();
+
+      try {
+        const response = await fetch(`${BASE_URL}/decrypt?message=${encodeURIComponent(message)}`);
+        const data = await response.json();
+        showResult("Decrypted Text: " + data.transformedText);
+      } catch {
+        showError("Server error. Please try again.");
+      }
+    }
+  </script>
+
+</body>
+</html>
